@@ -33,9 +33,13 @@ jobs:
       - name: Test install
         run: |
             pip install .
-
-      - name: Run tests
+      - name: translate
         run: |
-            pip install pytest
-            pytest tests
+              python3 make_book.py --book_name "魔剣士リーネ  許嫁と女騎士が寝取られる刻.epub" --language zh-hant
+      - name: Rename and Upload ePub
+        if: env.OPENAI_API_KEY != null
+        uses: actions/upload-artifact@v2
+        with:
+          name: epub_output
+          path: "魔剣士リーネ  許嫁と女騎士が寝取られる刻_bilingual.epub"
 
